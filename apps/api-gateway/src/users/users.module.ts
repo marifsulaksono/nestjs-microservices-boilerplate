@@ -8,15 +8,15 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from '../auth/auth.service';
 import { SharedModule } from 'shared/modules/shared.module';
 
+const USERS_CLIENT_NAME = 'USERS_CLIENT';
 @Module({
   imports: [
     SharedModule,
     ClientsModule.register([
       {
-        name: 'USERS_CLIENT',
+        name: USERS_CLIENT_NAME,
         transport: Transport.TCP,
         options: {
-          host: 'localhost',
           port: parseInt(process.env.APP_USER_PORT ?? '3001', 10),
         },
       },
@@ -27,7 +27,7 @@ import { SharedModule } from 'shared/modules/shared.module';
     ResponseService,
     AuthService,
     {
-      provide: 'USERS_CLIENT', // Explicitly register USERS_CLIENT as a provider
+      provide: USERS_CLIENT_NAME, // Explicitly register USERS_CLIENT as a provider
       useFactory: () => {
         return ClientProxyFactory.create({
           transport: Transport.TCP,
@@ -40,7 +40,7 @@ import { SharedModule } from 'shared/modules/shared.module';
     },
   ],
   controllers: [UsersController],
-  exports: ['USERS_CLIENT', AuthService],
+  exports: [USERS_CLIENT_NAME, AuthService],
 })
 export class UsersModule implements OnModuleInit {
   onModuleInit() {
@@ -52,34 +52,3 @@ export class UsersModule implements OnModuleInit {
     consumer.apply(JwtMiddleware).forRoutes('api/v1/user*');
   }
 }
-
-// @Module({
-//   imports: [
-//       ClientsModule.register([
-//           {
-//               name: 'USERS_CLIENT',
-//               transport: Transport.TCP,
-//               options: {
-//                 host: 'localhost',
-//                 port: parseInt(process.env.APP_USER_PORT ?? '3001', 10)
-//               }
-//           }
-//       ])
-//   ],
-  // providers: [
-  //   UsersService,
-  //   ResponseService,
-  // ],
-//   controllers: [UsersController]
-// })
-// // export class UsersModule {}
-// export class UsersModule implements OnModuleInit {
-//     onModuleInit() {
-//       const port = parseInt(process.env.APP_USER_PORT ?? '3001', 10);
-//       console.log(`UsersModule initialized with USERS_CLIENT on localhost:${port}`);
-//     }
-
-//     configure(consumer: MiddlewareConsumer) {
-//         consumer.apply(JwtMiddleware).forRoutes('api/v1/user*'); // Apply to all routes
-//       }
-//   }

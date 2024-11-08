@@ -4,6 +4,7 @@ import { RolesController } from './roles.controller';
 import { config } from 'dotenv';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Roles } from './roles.entity';
+import { User } from 'apps/users/src/users.entity';
 
 config();
 
@@ -16,7 +17,7 @@ config();
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    entities: [__dirname + '/**/*.entity{.ts,.js}'],
+    entities: [Roles, User],
     logging: true,
     synchronize: false,
     migrationsTableName: 'typeorm_migrations',
@@ -25,7 +26,9 @@ config();
   }),
   TypeOrmModule.forFeature([Roles]),
 ],
-  controllers: [RolesController],
-  providers: [RolesService],
+controllers: [RolesController],
+providers: [RolesService],
 })
 export class RolesModule {}
+
+// entities: [__dirname + '/**/*.entity{.ts,.js}'],

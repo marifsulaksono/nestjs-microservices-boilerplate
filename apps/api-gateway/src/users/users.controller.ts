@@ -35,7 +35,7 @@ export class UsersController {
   }
 
   @Get(':id')
-   async findOne(@Res() res: Response, @Param('id') id: string) {
+  async findOne(@Res() res: Response, @Param('id') id: string) {
    try {
       const data = await this.userClient.send('users.findOne', id).toPromise();
       return this.responseService.success(res, data, 'User fetched successfully');

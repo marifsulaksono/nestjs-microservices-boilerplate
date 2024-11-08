@@ -63,10 +63,6 @@ export class UsersService {
 
     request.password = await bcrypt.hash(request.password, 10);
     Object.assign(user, request)
-    // user.email = request.email;
-    // user.username = request.username;
-    // user.password = await bcrypt.hash(request.password, 10);
-    // user.roles_id = request.roles_id;
     return this.userRepository.save(user);
   }
 

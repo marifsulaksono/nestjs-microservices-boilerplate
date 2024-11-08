@@ -13,9 +13,24 @@ export class RolesService {
   ) {}
 
   async create(createRoleDto: CreateRoleDto): Promise<Roles> {
-    return this.roleRepository.save(createRoleDto);
+    
+    const role = new Roles();
+    role.name = createRoleDto.name;
+    if (createRoleDto.access && typeof createRoleDto.access === 'object') {
+        role.access = JSON.stringify(createRoleDto.access);
+    }
+    return this.roleRepository.save(role);
   }
 
+  /**
+   * Retrieve a list of roles, with filtering and pagination.
+   *
+   * @param filter - an object with optional fields to filter the results
+   * @param page - the page number to retrieve (1-indexed)
+   * @param limit - the number of items per page
+   * @returns a promise that resolves to an object with a `list` property containing the roles,
+   *          and a `meta` property with pagination metadata
+   */
   async findAll(filter: any = {}, page: number, limit: number){
 
     const queryBuilder = this.roleRepository.createQueryBuilder('role');
@@ -53,8 +68,14 @@ export class RolesService {
     if (!role) {
       return null;
     }
-    await this.roleRepository.update(id, updateRoleDto);
-    return this.roleRepository.findOneBy({ id });
+
+    if (updateRoleDto.access && typeof updateRoleDto.access === 'object') {
+      updateRoleDto.access = JSON.stringify(updateRoleDto.access);
+    }
+
+    Object.assign(role, updateRoleDto);
+
+    return this.roleRepository.save(role);
   }
 
   delete(id: string): Promise<{ affected?: number }> {

@@ -13,7 +13,6 @@ export class AuthController {
   
     @Post('login')
     async signIn(@Res() res: Response, @Body() signInDto: SignInDto) {
-      console.log('new request');
       try {
         const { access_token } = await this.authService.signIn(
           signInDto.email,
