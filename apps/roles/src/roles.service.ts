@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateRoleDto } from '../../../shared/dtos/role.dto';
 import { UpdateRoleDto } from '../../../shared/dtos/role.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Roles } from './rolse.entity';
+import { Roles } from './roles.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()

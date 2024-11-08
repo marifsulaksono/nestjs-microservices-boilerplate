@@ -12,8 +12,9 @@ export class UsersController {
    ) {}
 
    @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-   return this.userClient.send('users.create', createUserDto);
+  async create(@Res() res: Response,@Body() createUserDto: CreateUserDto) {
+   const data = await this.userClient.send('users.create', createUserDto).toPromise();
+   return this.responseService.success(res, data, 'Users inserted successfully');
   }
 
   @Get()
@@ -23,24 +24,47 @@ export class UsersController {
       email: query.email,
       page : query.number || 1,
       itemPerPage : query.itemPerPage || 10,
-    };
-    const data = await this.userClient.send('users.findAll', query).toPromise();
-   console.log("data users: ", data);
-   return this.responseService.success(res, data, 'Users fetched successfully');
+   };
+   try {
+      const data = await this.userClient.send('users.findAll', query).toPromise();
+      return this.responseService.success(res, data, 'Users fetched successfully');
+   } catch (error) {
+      console.error('Error sending message to users microservice:', error);
+      return this.responseService.failed(res, error, 500);
+   }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-   return this.userClient.send('users.findOne', id);
+   async findOne(@Res() res: Response, @Param('id') id: string) {
+   try {
+      const data = await this.userClient.send('users.findOne', id).toPromise();
+      return this.responseService.success(res, data, 'User fetched successfully');
+   } catch (error) {
+      console.error('Error sending message to users microservice:', error);
+      return this.responseService.failed(res, error, 500);
+   }
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-   return this.userClient.send('users.update', updateUserDto);
+  async update(@Res() res: Response, @Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+   try {
+      updateUserDto.id = id;
+      const data = await this.userClient.send('users.update', updateUserDto).toPromise();
+      return this.responseService.success(res, data, 'User updated successfully');
+   } catch (error) {
+      console.error('Error sending message to users microservice:', error);
+      return this.responseService.failed(res, error, 500);
+   }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-   return this.userClient.send('users.delete', id);
+  async remove(@Res() res: Response, @Param('id') id: string) {
+   try {
+      const data = await this.userClient.send('users.delete', id).toPromise();
+      return this.responseService.success(res, null, 'User deleted successfully');
+   } catch (error) {
+      console.error('Error sending message to users microservice:', error);
+      return this.responseService.failed(res, error, 500);
+   }
   }
 }

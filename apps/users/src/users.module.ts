@@ -4,7 +4,7 @@ import { UsersService } from './users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users.entity';
 import { config } from 'dotenv';
-import { Roles } from 'apps/roles/src/rolse.entity';
+import { Roles } from 'apps/roles/src/roles.entity';
 
 config();
 

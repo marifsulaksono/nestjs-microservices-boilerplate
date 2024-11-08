@@ -1,4 +1,4 @@
-import { Roles } from 'apps/roles/src/rolse.entity';
+import { Roles } from 'apps/roles/src/roles.entity';
 import { BeforeInsert, Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 

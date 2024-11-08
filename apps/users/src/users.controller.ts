@@ -9,12 +9,12 @@ export class UsersController {
 
   @MessagePattern('users.create')
   create(@Payload() createRoleDto: CreateUserDto) {
-    return this.usersService.create(createRoleDto);
+    const data = this.usersService.create(createRoleDto);
+    return data;
   }
 
   @MessagePattern('users.findAll')
   findAll(@Payload() query: any) {
-    console.log("new coming command users.findAll")
     const filter = {
       username: query.username,
       email: query.email

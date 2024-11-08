@@ -3,7 +3,7 @@ import { RolesService } from './roles.service';
 import { RolesController } from './roles.controller';
 import { config } from 'dotenv';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Roles } from './rolse.entity';
+import { Roles } from './roles.entity';
 
 config();
 

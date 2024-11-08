@@ -13,16 +13,16 @@ export class UsersService {
   ) { }
 
   async create(request: CreateUserDto): Promise<User> {
-    const user: User = new User();
-    user.email = request.email;
-    user.name = request.name;
-    user.password = await bcrypt.hash(request.password, 10);
-    return this.userRepository.save(user);
+      const payload: User = new User();
+      payload.email = request.email;
+      payload.name = request.name;
+      payload.password = await bcrypt.hash(request.password, 10);
+      payload.roles_id = request.roles_id;
+      return await this.userRepository.save(payload);
   }
 
 
   async findAll(filter: any = {}, page: number, limit: number) {
-    console.log("processing");
     const queryBuilder = this.userRepository.createQueryBuilder('user');
     queryBuilder.leftJoinAndSelect('user.role', 'roles');
     if (filter.name) {
@@ -62,12 +62,17 @@ export class UsersService {
   }
 
   async update(id: string, request: UpdateUserDto): Promise<User> {
-    const user: User = new User();
-    user.email = request.email;
-    user.name = request.name;
-    user.password = await bcrypt.hash(request.password, 10);
-    user.id = id;
-    user.roles_id = request.roles_id;
+    const user = await this.userRepository.findOneBy({ id });
+    if (!user) {
+      return null;
+    }
+
+    request.password = await bcrypt.hash(request.password, 10);
+    Object.assign(user, request)
+    // user.email = request.email;
+    // user.name = request.name;
+    // user.password = await bcrypt.hash(request.password, 10);
+    // user.roles_id = request.roles_id;
     return this.userRepository.save(user);
   }
 
