@@ -30,6 +30,11 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
+  @MessagePattern('users.findOneByEmail')
+  findOneByEmail(@Payload() email: string) {
+    return this.usersService.findOneByEmail(email);
+  }
+
   @MessagePattern('users.update')
   update(@Payload() updateRoleDto: UpdateUserDto) {
     return this.usersService.update(updateRoleDto.id, updateRoleDto);
