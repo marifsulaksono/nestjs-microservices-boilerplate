@@ -24,7 +24,7 @@ export class UsersController {
       page : query.number || 1,
       itemPerPage : query.itemPerPage || 10,
     };
-   const data = this.userClient.send('users.findAll', query);
+    const data = await this.userClient.send('users.findAll', query).toPromise();
    console.log("data users: ", data);
    return this.responseService.success(res, data, 'Users fetched successfully');
   }

@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { RolesModule } from './roles.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from 'dotenv';
 
 config();
@@ -13,24 +12,12 @@ async function bootstrap() {
     {
       transport: Transport.TCP,
       options: {
+        host: 'localhost',
         port: port,
       },
     },
   );
   await app.listen();
-
-  TypeOrmModule.forRoot({
-    type: 'mysql',
-    host: process.env.DB_HOST,
-    port: parseInt(process.env.DB_PORT, 10),
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    entities: [__dirname + '/**/*.entity{.ts,.js}'],
-    logging: true,
-    synchronize: false,
-    migrationsTableName: 'typeorm_migrations',
-    migrationsRun: false,
-  })
+  console.log(`Roles microservice is listening on localhost:${port}`);
 }
 bootstrap();

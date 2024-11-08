@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
@@ -23,4 +23,10 @@ import { ResponseService } from 'shared/utils/response.service';
   ],
   controllers: [UsersController]
 })
-export class UsersModule {}
+// export class UsersModule {}
+export class UsersModule implements OnModuleInit {
+    onModuleInit() {
+      const port = parseInt(process.env.APP_USER_PORT ?? '3001', 10);
+      console.log(`UsersModule initialized with USERS_CLIENT on localhost:${port}`);
+    }
+  }
