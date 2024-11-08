@@ -15,7 +15,7 @@ export class UsersService {
   async create(request: CreateUserDto): Promise<User> {
       const payload: User = new User();
       payload.email = request.email;
-      payload.name = request.name;
+      payload.username = request.username;
       payload.password = await bcrypt.hash(request.password, 10);
       payload.roles_id = request.roles_id;
       return await this.userRepository.save(payload);
@@ -25,8 +25,8 @@ export class UsersService {
   async findAll(filter: any = {}, page: number, limit: number) {
     const queryBuilder = this.userRepository.createQueryBuilder('user');
     queryBuilder.leftJoinAndSelect('user.role', 'roles');
-    if (filter.name) {
-      queryBuilder.where('user.name LIKE :name', { name: `%${filter.name}%` });
+    if (filter.username) {
+      queryBuilder.where('user.username LIKE :name', { name: `%${filter.username}%` });
     }
 
     if (filter.email) {
@@ -38,16 +38,10 @@ export class UsersService {
       .take(limit)
       .getManyAndCount();
 
-      const links = [];
-      const totalPages = Math.ceil(total / limit);
-    
-      for (let i = 1; i <= totalPages; i++) {
-        links.push(`http://localhost:3000/api/v1/users?sort=user_auth.id%20DESC&page=${i}`);
-      }
+      
     return {
       list: users,
       meta: {
-        links: links,
         total: total
       }
     };
@@ -69,6 +63,10 @@ export class UsersService {
 
     request.password = await bcrypt.hash(request.password, 10);
     Object.assign(user, request)
+    // user.email = request.email;
+    // user.username = request.username;
+    // user.password = await bcrypt.hash(request.password, 10);
+    // user.roles_id = request.roles_id;
     return this.userRepository.save(user);
   }
 

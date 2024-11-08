@@ -2,14 +2,14 @@ import { Roles } from 'apps/roles/src/roles.entity';
 import { BeforeInsert, Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
-@Entity({ name: 'm_user' })
+@Entity({ name: 'users' })
 export class User {
     
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ type: 'varchar', length: 255 })
-  name: string;
+  username: string;
 
   @Column({ type: 'varchar', length: 255 })
   email: string;

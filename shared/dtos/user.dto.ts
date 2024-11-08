@@ -3,7 +3,7 @@ import { IsAlphanumeric, IsEmail, IsNotEmpty, IsString, Matches, MinLength } fro
 
 export class UserDto {
    id: string;
-   name: string;
+   username: string;
    email: string;
    password: string;
 }
@@ -16,7 +16,7 @@ export class CreateUserDto {
 @IsNotEmpty()
 @MinLength(3, { message: 'Username must have atleast 3 characters.' })
 @IsString({ message: 'Namae must be a string' })
-name: string;
+username: string;
 
 @IsNotEmpty()
 @IsEmail(null, { message: 'Please provide valid Email.' })

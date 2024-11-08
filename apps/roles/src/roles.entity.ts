@@ -2,7 +2,7 @@ import { User } from 'apps/users/src/users.entity';
 import { BeforeInsert, Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
-@Entity({ name: 'm_roles' })
+@Entity({ name: 'roles' })
 export class Roles {
     
   @PrimaryGeneratedColumn('uuid')
