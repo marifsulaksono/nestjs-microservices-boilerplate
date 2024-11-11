@@ -62,6 +62,7 @@ npm run migration:down
 ```
 
 - Membuat service baru
+
 Untuk membuat app baru, gunakan perintah:
 ```
 nest generate app <app name>
@@ -75,7 +76,8 @@ nest generate controller <app name> --project api-gateway
 ```
 
 
-- Menjalankan projek laravel <br>
+- Menjalankan projek laravel
+
 development / local:
 ```
 npm run start
