@@ -1,99 +1,134 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# NestJS
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Description project
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## Installation
+**node** : 20 <br >
+**nest cli** : 10.4.7<br >
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Sebelum menjalankan projek ini pastikan kita telah menginstall:
+- nestcli: untuk menjalankan aplikasi nestjs <br >`npm i -g @nestjs/cli`
+- pm2: Untuk mengelola proses aplikasi secara bersamaan <br > `npm i -g pm2`
 
-## Project setup
+Berikut tahap untuk setup projek :
+- Clone this repository
+```
+  git clone https://gitlab.com/venturo-web/venturo-nest-microservice-boilerplate.git
+```
+- Masuk ke direktori projek
+```
+cd venturo-nest-microservice-boilerplate
+```
+- Instal dependency laravel menggunakan perintah
+```
+npm install
+```
+- Copy `.env.example` menjadi `.env` dengan perintah
+```
+cp .env.example .env
+```
+- Konfigurasi Database
+Sesuaikan konfigurasi database pada file `.env`
+```
+APP_NAME=space
+APP_GATEWAY_PORT=3000
+APP_USER_PORT=3001
+APP_ROLE_PORT=3002
 
-```bash
-$ npm install
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=core_nestjs_venturo
+DB_USERNAME=root
+DB_PASSWORD=
+
+JWT_SECRET=
+```
+- Migration
+Cara membuat file migrasi baru:
+```
+npm run migration:create --name=<your migration name>
 ```
 
-## Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+Cara menjalankan file migrasi:
+```
+npm run migrate
 ```
 
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+Cara mengembalikan proses migrasi (1 step):
+```
+npm run migration:down
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g mau
-$ mau deploy
+- Membuat service baru
+Untuk membuat app baru, gunakan perintah:
+```
+nest generate app <app name>
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Lalu untuk membuat gateway baru, gunakan perintah:
+```
+nest generate module <app name> --project api-gateway
+nest generate service <app name> --project api-gateway
+nest generate controller <app name> --project api-gateway
+```
 
-## Resources
 
-Check out a few resources that may come in handy when working with NestJS:
+- Menjalankan projek laravel
+development / local:
+```
+npm run start
+```
+staging / production:
+```
+npm run build
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+atau kita juga dapat menjalankan app secara manual:
+```
+nest start <apps name> --watch
+```
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Struktur Folder 
+Nest JS
 
-## Stay in touch
+- nest generate app api-gateway -> membuat aplikasi baru
+- npm install @nestjs/microservices -> install library micro service nests
+- nest generate module products --project api-gateway -> membuat module roles di folder api-gateway
+- nest generate service roles --project api-gateway -> membuat service roles di folder api-gateway
+- nest generate controller auth --project api-gateway -> membuat controller roles di folder api-gateway
+- nest generate resources roles --project api-gateway -> membuat keseluruhan (module, service, controller) roles di folder api-gateway
+- 
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```
+.
+├── apps
+│   ├── api-gateway : Menyimpan file kode API gateway
+│      ├── src : Menyimpan file kode internal API gateway
+│         ├── auth : Menyimpan module gateway API auth
+│         ├── middleware : Menyimpan semua middleware (Hanya lead programmer yang boleh menambahkan middleware)
+│         ├── roles : Menyimpan module gateway API roles
+│         ├── users : Menyimpan module gateway API users
+│         ├── api-gateway.module.ts : Menyimpan konfigurasi module API gateway
+│         ├── main.ts : Entry point untuk API gateway aplikasi
+│      ├── test : Menyimpan file testing untuk gateway
+│      ├── tsconfig.app.json : Menyimpan konfigurasi typescript pada API gateway
+│   ├── roles : Menyimpan semua module service roles
+│      ├── src : Menyimpan file kode internal service roles
+│   ├── users : Menyimpan semua module service users
+│      ├── src : Menyimpan file kode internal service users
+├── database : Directory untuk menyimpan Database Migration & Seeder Script
+├── shared : Directory untuk menyimpan semua helper yang dapat digunakan pada semua module
+├── config : Directory untuk menyimpan semua konfigurasi
+├── database : Directory untuk menyimpan Database Migration Script
+├── .env : File environment untuk menyimpan konfigurasi pada masing-masing device development (Jangan dipush ke repository)
+├── .env.example : File environment yang digunakan sebagai template .env (Wajib di push ke repository dan nama variabel harus di update menyesuaikan perubahan pada file .env) agar semua tim bisa mengetahui konfigurasi apa saja yang dibutuhkan.
+├── .gitignore : File untuk mendaftarkan folder / file apa saja yang tidak push ke repository
+└── build-local.js : File untuk menyimpan fungsi helper untuk melakukan build aplikasi secara lokal dan melakukan start
+└── build.js : File untuk menyimpan fungsi helper untuk melakukan build aplikasi
+└── ecosystem.config.js : File untuk menyimpan fungsi helper untuk membuat ekosistem untuk menjalakan aplikasi
+└── tsconfig.json : File untuk menyimpan konfigurasi kode typescrypt secara umum
+```
