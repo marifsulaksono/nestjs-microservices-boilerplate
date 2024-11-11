@@ -75,7 +75,7 @@ nest generate controller <app name> --project api-gateway
 ```
 
 
-- Menjalankan projek laravel
+- Menjalankan projek laravel <br>
 development / local:
 ```
 npm run start
