@@ -92,17 +92,6 @@ nest start <apps name> --watch
 
 
 ## Struktur Folder 
-Nest JS
-
-- nest generate app api-gateway -> membuat aplikasi baru
-- npm install @nestjs/microservices -> install library micro service nests
-- nest generate module products --project api-gateway -> membuat module roles di folder api-gateway
-- nest generate service roles --project api-gateway -> membuat service roles di folder api-gateway
-- nest generate controller auth --project api-gateway -> membuat controller roles di folder api-gateway
-- nest generate resources roles --project api-gateway -> membuat keseluruhan (module, service, controller) roles di folder api-gateway
-- 
-
-
 ```
 .
 ├── apps
